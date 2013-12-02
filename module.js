@@ -1,12 +1,14 @@
 /*jslint browser:true, indent:2*/
 /*globals define, require*/ // Require.JS
+/*jslint nomen:true*/ // LoDash / Underscore.JS
 
 define([
   'jquery',
+  'lodash',
   'angular',
   'text!./partial.html',
   'foundation'
-], function ($, ng, partial) {
+], function ($, _, ng, partial) {
   'use strict';
 
   var mod;
@@ -63,13 +65,22 @@ define([
   ]);
 
   mod.directive('bmpFoundation', [
-    '$rootScope',
-    function ($root) {
+    '$rootScope', '$timeout',
+    function ($root, $timeout) {
       return {
         replace: false,
         link: function ($scope) {
-          var confirmCallbacks;
+          var confirmCallbacks, pokeFoundation;
+
           confirmCallbacks = {};
+
+          pokeFoundation = function () {
+            $timeout(function () {
+              $root.$evalAsync(function () {
+                $(document.body).foundation();
+              });
+            }, 0);
+          };
 
           $scope.openRevealModal = function (id) {
             var modal$;
@@ -78,7 +89,7 @@ define([
           };
 
           $scope.confirmWithReveal = function (options, callback) {
-            options.asyncId = '' + Math.random();
+            options.asyncId = String(Math.random());
             confirmCallbacks[options.asyncId] = callback;
             $root.$broadcast('confirm', options);
             $scope.openRevealModal('confirm');
@@ -88,6 +99,8 @@ define([
             confirmCallbacks[id](result);
             delete confirmCallbacks[id];
           });
+
+          $scope.$watch(_.throttle(pokeFoundation, 1e3, { leading: false }));
         }
       };
     }

@@ -12,6 +12,9 @@ Our bindings between [ZURB's Foundation](foundation.zurb.com) and [Angular.JS](a
 
 - jQuery, registered with Require.JS as "jquery"
 
+- LoDash, registered with Require.JS as "lodash"
+
+
 ## Installation
 
 Copy both `partial.html` and `module.js` to a directory within your project, or use `git submodule` to add this repository to your project.

@@ -65,8 +65,15 @@ define([
   ]);
 
   mod.directive('bmpFoundation', [
-    '$rootScope', '$timeout',
-    function ($root, $timeout) {
+    '$rootScope', '$timeout', '$compile',
+    function ($root, $timeout, $compile) {
+      $(document).ready(function () {
+        var partial$;
+        partial$ = $(partial);
+        partial$.appendTo(document.body);
+        $compile(partial$)($root);
+      });
+
       return {
         replace: false,
         link: function ($scope) {
@@ -135,10 +142,6 @@ define([
       });
     }
   ]);
-
-  $(document).ready(function () {
-    $(document.body).append(partial);
-  });
 
   return mod;
 });

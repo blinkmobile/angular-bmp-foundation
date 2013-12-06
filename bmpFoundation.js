@@ -6,7 +6,7 @@ define([
   'jquery',
   'lodash',
   'angular',
-  'text!./partial.html',
+  'text!partial.html',
   'foundation'
 ], function ($, _, ng, partial) {
   'use strict';
@@ -33,7 +33,7 @@ define([
       return {
         replace: false,
         link: function ($scope, el$, attrs) {
-          el$.on('click', function (event) {
+          el$.on('click', function () {
             $scope.openRevealModal(attrs.bmpCloseReveal);
             return false;
           });
@@ -48,7 +48,7 @@ define([
       $(document).on('closed', '.reveal-modal[data-reveal]', function () {
         var this$;
         this$ = $(this);
-        $root.$broadcast('revealModalClosed', this$.attr('id'), this$);
+        $root.$broadcast('bmp.foundation.revealClosed', this$.attr('id'), this$);
       });
       return {
         replace: false,
@@ -98,14 +98,16 @@ define([
           $scope.confirmWithReveal = function (options, callback) {
             options.asyncId = String(Math.random());
             confirmCallbacks[options.asyncId] = callback;
-            $root.$broadcast('confirm', options);
+            $root.$broadcast('bmp.foundation.confirm', options);
             $scope.openRevealModal('confirm');
           };
 
-          $scope.$on('confirmed', function ($event, id, result) {
+          /*jslint unparam:true*/ // $event
+          $scope.$on('bmp.foundation.confirmed', function ($event, id, result) {
             confirmCallbacks[id](result);
             delete confirmCallbacks[id];
           });
+          /*jslint unparam:false*/
 
           $scope.$watch(_.throttle(pokeFoundation, 1e3, { leading: false }));
         }
@@ -113,7 +115,7 @@ define([
     }
   ]);
 
-  mod.controller('ConfirmCtrl', [
+  mod.controller('bmpFoundationConfirmCtrl', [
     '$scope', '$rootScope',
     function ($scope, $root) {
       $scope.title = '';
@@ -122,24 +124,28 @@ define([
       $scope.asyncId = null;
       $scope.result = false;
 
-      $scope.$on('confirm', function ($events, options) {
+      /*jslint unparam:true*/ // $event
+      $scope.$on('bmp.foundation.confirm', function ($event, options) {
         $scope.title = options.title;
         $scope.lead = options.lead;
         $scope.body = options.body;
         $scope.asyncId = options.asyncId;
         $scope.result = false;
       });
+      /*jslint unparam:false*/
 
       $scope.confirm = function () {
         $scope.result = true;
         $scope.closeRevealModal();
       };
 
-      $scope.$on('revealModalClosed', function ($event, id) {
+      /*jslint unparam:true*/ // $event
+      $scope.$on('bmp.foundation.revealClosed', function ($event, id) {
         if (id === 'confirm') {
-          $root.$broadcast('confirmed', $scope.asyncId, $scope.result);
+          $root.$broadcast('bmp.foundation.confirmed', $scope.asyncId, $scope.result);
         }
       });
+      /*jslint unparam:false*/
     }
   ]);
 

@@ -8,5 +8,11 @@
     "grunt": "~0.4",
     "grunt-contrib-requirejs": "~0.4",
     "grunt-jslint": "~1.1"
-  }
+  },
+  "licenses": [
+    {
+      "type": "BSD 3-Clause",
+      "url": "LICENSE.md"
+    }
+  ]
 }

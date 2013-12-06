@@ -2,6 +2,8 @@
 
 Our bindings between [ZURB's Foundation](foundation.zurb.com) and [Angular.JS](angularjs.org).
 
+Unlike other such binding projects, our attempt focuses on reusing the official Foundation code as much as possible. As such, we try to wrap Foundation's jQuery interface with Angular.JS, rather than try to replace it.
+
 ## Prerequisites
 
 - Require.JS with its `text!` plugin
@@ -17,9 +19,7 @@ Our bindings between [ZURB's Foundation](foundation.zurb.com) and [Angular.JS](a
 
 ## Installation
 
-Copy both `partial.html` and `module.js` to a directory within your project, or use `git submodule` to add this repository to your project.
-
-It is suggested that these files be accessible via `/js/components/angular-foundation/`. However, it ought to be possible to reuse these files with any directory scheme, provided Require.JS has the necessary path registration.
+Copy `bmpFoundation.min.js` to a directory within your project. We're also in Bower under 'angular-bmp-foundation'.
 
 Load this component in with Require.JS, then make your Angular.JS app depend on the module it exposes, like so:
 
@@ -27,12 +27,12 @@ Load this component in with Require.JS, then make your Angular.JS app depend on 
 // assuming Require.JS's baseUrl is set to the 'js' directory...
 define([
   'angular',
-  'components/angular-foundation/module'
+  'bower_components/angular-bmp-foundation/bmpFoundation.min'
 ], function (ng) {
   var app;
   app = angular.module('app', ['bmp.foundation']);
 
-  // TODO: define the rest of your Angular.JS app...  
+  // TODO: define the rest of your Angular.JS app...
 });
 ```
 
@@ -61,7 +61,7 @@ This element may be clicked to close its parent modal.
 
 ### a[bmp-open-reveal=id], button[bmp-open-reveal=id]
 
-1. Create a Foundation Reveal modal. 
+1. Create a Foundation Reveal modal.
 
 2. Add the `bmp-open-reveal` attribute to any clickable element on your page, settings its value to the `id` attribute of the desired target modal.
 
@@ -73,16 +73,16 @@ This element may be clicked to open the target modal.
 
 The controller's `$scope` has a `closeRevealModal()` method automatically defined. This method can be called anywhere within the controller's scope in order to close the modal.
 
-### $scope.$on ('revealModalClosed', handler)
+### $scope.$on ('bmp.foundation.revealClosed', handler)
 
 You may hook this Angular.JS event from any `$scope` in order to be notified whenever any Foundation Reveal modal is closed.
 
 - {Function} `handler` - called when the event triggers
 
     - {ng.Event} `$event` - Angular's wrapped Event object
-    
+
     - {String} `id` - the unique `id` attribute from the modal element
-    
+
     - {Element$} `el$` - the modal element, wrapped by jQuery or `angular.element`
 
 ### $scope.openRevealModal (id)
@@ -98,9 +98,9 @@ Call this from any `$scope` to open a Reveal modal for the purpose of prompting 
 - {Object} `options` - values controlling the presentation of the modal
 
     - {String} [`title`] - text displayed in very large font at the top
-    
+
     - {String} [`lead`] - text displayed in large font beneath `title` (if any)
-    
+
     - {String} [`body`] - text displayed in regular font beneath `lead` (if any)
 
 - {Function} `callback` - called once the user makes their choice

@@ -7,8 +7,10 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json')
   });
 
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-jslint');
+  grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
 
@@ -53,12 +55,38 @@ module.exports = function (grunt) {
           out: 'bmpFoundation.min.js'
         }
       }
+    },
+
+    connect: {
+      temporary: {
+        options: {
+          port: 9001,
+          base: '.'
+        }
+      },
+      keepalive: {
+        options: {
+          port: 0,
+          base: '.',
+          keepalive: true
+        }
+      }
+    },
+
+    mocha: {
+      all: {
+        options: {
+          urls: [
+          ],
+          run: true
+        }
+      }
     }
 
   });
 
   grunt.registerTask('build', ['requirejs']);
-  grunt.registerTask('test', ['jslint']);
+  grunt.registerTask('test', ['connect:temporary', 'jslint', 'mocha']);
   // Default task(s).
   grunt.registerTask('default', ['test', 'build']);
 

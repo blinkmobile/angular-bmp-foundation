@@ -5,6 +5,11 @@
   "repository": "git@github.com:blinkmobile/angular-bmp-foundation.git",
   "main": "bmpFoundation.min.js",
   "devDependencies": {
+    "angular": "~1.2",
+    "chai": "~1.8",
+    "foundation": "~5.0",
+    "lodash": "~2.4",
+    "mocha": "~1.15",
     "requirejs-text": "~2.0"
   },
   "licenses": [

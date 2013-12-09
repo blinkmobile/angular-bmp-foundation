@@ -109,28 +109,36 @@
 
           $scope.alertWithReveal = function (options, callback) {
             options.asyncId = String(Math.random());
-            confirmCallbacks[options.asyncId] = callback;
+            if (_.isFunction(callback)) {
+              confirmCallbacks[options.asyncId] = callback;
+            }
             $root.$broadcast('bmp.foundation.alert', options);
             $scope.openRevealModal('bmpFoundationAlert');
           };
 
           $scope.confirmWithReveal = function (options, callback) {
             options.asyncId = String(Math.random());
-            confirmCallbacks[options.asyncId] = callback;
+            if (_.isFunction(callback)) {
+              confirmCallbacks[options.asyncId] = callback;
+            }
             $root.$broadcast('bmp.foundation.confirm', options);
             $scope.openRevealModal('bmpFoundationConfirm');
           };
 
           /*jslint unparam:true*/ // $event
           $scope.$on('bmp.foundation.alerted', function ($event, id) {
-            confirmCallbacks[id]();
+            if (_.isFunction(confirmCallbacks[id])) {
+              confirmCallbacks[id]();
+            }
             delete confirmCallbacks[id];
           });
           /*jslint unparam:false*/
 
           /*jslint unparam:true*/ // $event
           $scope.$on('bmp.foundation.confirmed', function ($event, id, result) {
-            confirmCallbacks[id](result);
+            if (_.isFunction(confirmCallbacks[id])) {
+              confirmCallbacks[id](result);
+            }
             delete confirmCallbacks[id];
           });
           /*jslint unparam:false*/

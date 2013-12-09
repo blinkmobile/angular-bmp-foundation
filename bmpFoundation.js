@@ -2,13 +2,22 @@
 /*globals define, require*/ // Require.JS
 /*jslint nomen:true*/ // LoDash / Underscore.JS
 
+// https://github.com/umdjs/umd/blob/master/amdWeb.js
+(function (root, factory) {
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
 define([
   'jquery',
   'lodash',
   'angular',
   'text!partial.html',
   'foundation'
-], function ($, _, ng, partial) {
+    ], factory);
+  } else {
+    factory(root.$, root._, root.angular);
+  }
+}(this, function ($, _, ng, partial) {
   'use strict';
 
   var mod;
@@ -67,12 +76,15 @@ define([
   mod.directive('bmpFoundation', [
     '$rootScope', '$timeout', '$compile',
     function ($root, $timeout, $compile) {
+
+      if (partial) {
       $(document).ready(function () {
         var partial$;
         partial$ = $(partial);
         partial$.appendTo(document.body);
         $compile(partial$)($root);
       });
+      }
 
       return {
         replace: false,
@@ -150,4 +162,4 @@ define([
   ]);
 
   return mod;
-});
+}));

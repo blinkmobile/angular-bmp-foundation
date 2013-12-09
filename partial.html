@@ -1,13 +1,29 @@
-<div id="bmpFoundationConfirm" class="reveal-modal" data-reveal="" x-ng-controller="bmpFoundationConfirmCtrl">
-  <h2 x-ng-if="title">{{title}}</h2>
-  <p class="lead" x-ng-if="lead">{{lead}}</p>
-  <p x-ng-if="body">{{body}}</p>
-  <div class="row">
-    <div class="small-12 columns">
-      <button class="right" x-ng-click="confirm()">Continue</button>
-      <button class="right secondary" x-bmp-close-reveal="">Cancel</button>
+<div>
+  <div id="bmpFoundationConfirm" class="reveal-modal" data-reveal="" x-ng-controller="bmpFoundationConfirmCtrl">
+    <h2 x-ng-if="title">{{title}}</h2>
+    <p class="lead" x-ng-if="lead">{{lead}}</p>
+    <p x-ng-if="body">{{body}}</p>
+    <div class="row">
+      <div class="small-12 columns">
+        <button class="right" x-ng-click="confirm()">Continue</button>
+        <button class="right secondary" x-bmp-close-reveal="">Cancel</button>
+      </div>
     </div>
+
+    <a class="close-reveal-modal">&#215;</a>
   </div>
 
-  <a class="close-reveal-modal">&#215;</a>
+  <div id="bmpFoundationAlert" class="reveal-modal" data-reveal="" x-ng-controller="bmpFoundationAlertCtrl">
+    <h2 x-ng-if="title">{{title}}</h2>
+    <p class="lead" x-ng-if="lead">{{lead}}</p>
+    <p x-ng-if="body">{{body}}</p>
+    <div class="row">
+      <div class="small-12 columns">
+        <button class="right" x-bmp-close-reveal="">Close</button>
+      </div>
+    </div>
+
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+
 </div>

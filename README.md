@@ -106,3 +106,17 @@ Call this from any `$scope` to open a Reveal modal for the purpose of prompting 
 - {Function} `callback` - called once the user makes their choice
 
     - {Boolean} `result` - the user's response
+
+### $scope.alertWithReveal (options, callback)
+
+Call this from any `$scope` to open a Reveal modal for the purpose of alerting the user.
+
+- {Object} `options` - values controlling the presentation of the modal
+
+    - {String} [`title`] - text displayed in very large font at the top
+
+    - {String} [`lead`] - text displayed in large font beneath `title` (if any)
+
+    - {String} [`body`] - text displayed in regular font beneath `lead` (if any)
+
+- {Function} `callback` - called once the user closes the alert

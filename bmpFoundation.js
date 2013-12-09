@@ -107,12 +107,26 @@
             modal$.foundation('reveal', 'open');
           };
 
+          $scope.alertWithReveal = function (options, callback) {
+            options.asyncId = String(Math.random());
+            confirmCallbacks[options.asyncId] = callback;
+            $root.$broadcast('bmp.foundation.alert', options);
+            $scope.openRevealModal('bmpFoundationAlert');
+          };
+
           $scope.confirmWithReveal = function (options, callback) {
             options.asyncId = String(Math.random());
             confirmCallbacks[options.asyncId] = callback;
             $root.$broadcast('bmp.foundation.confirm', options);
             $scope.openRevealModal('bmpFoundationConfirm');
           };
+
+          /*jslint unparam:true*/ // $event
+          $scope.$on('bmp.foundation.alerted', function ($event, id) {
+            confirmCallbacks[id]();
+            delete confirmCallbacks[id];
+          });
+          /*jslint unparam:false*/
 
           /*jslint unparam:true*/ // $event
           $scope.$on('bmp.foundation.confirmed', function ($event, id, result) {
@@ -160,6 +174,34 @@
       /*jslint unparam:false*/
     }
   ]);
+
+  mod.controller('bmpFoundationAlertCtrl', [
+    '$scope', '$rootScope',
+    function ($scope, $root) {
+      $scope.title = '';
+      $scope.lead = '';
+      $scope.body = '';
+      $scope.asyncId = null;
+
+      /*jslint unparam:true*/ // $event
+      $scope.$on('bmp.foundation.alert', function ($event, options) {
+        $scope.title = options.title;
+        $scope.lead = options.lead;
+        $scope.body = options.body;
+        $scope.asyncId = options.asyncId;
+      });
+      /*jslint unparam:false*/
+
+      /*jslint unparam:true*/ // $event
+      $scope.$on('bmp.foundation.revealClosed', function ($event, id) {
+        if (id === 'bmpFoundationAlert') {
+          $root.$broadcast('bmp.foundation.alerted', $scope.asyncId);
+        }
+      });
+      /*jslint unparam:false*/
+    }
+  ]);
+
 
   return mod;
 }));

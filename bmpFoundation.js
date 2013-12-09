@@ -96,6 +96,10 @@
           pokeFoundation = function () {
             $timeout(function () {
               $root.$evalAsync(function () {
+                // https://github.com/zurb/foundation/issues/2956
+                $(window).off('scroll'); // temporary fix to clear Magellan
+
+                // reinitialise Foundation
                 $(document.body).foundation();
               });
             }, 0);

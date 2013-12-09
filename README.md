@@ -120,3 +120,11 @@ Call this from any `$scope` to open a Reveal modal for the purpose of alerting t
     - {String} [`body`] - text displayed in regular font beneath `lead` (if any)
 
 - {Function} `callback` - called once the user closes the alert
+
+## Known Issues
+
+### "scroll" events
+
+Due to a weird issue (possibly in Foundation), this component has to unregister all "scroll" events regularly: https://github.com/zurb/foundation/issues/2956
+
+As such, it will be painful to use this component in combination with code that adds other "scroll" event handlers.

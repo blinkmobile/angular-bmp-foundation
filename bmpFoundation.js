@@ -7,12 +7,12 @@
   'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-define([
-  'jquery',
-  'lodash',
-  'angular',
-  'text!partial.html',
-  'foundation'
+    define([
+      'jquery',
+      'lodash',
+      'angular',
+      'text!partial.html',
+      'foundation'
     ], factory);
   } else {
     factory(root.$, root._, root.angular);
@@ -78,12 +78,12 @@ define([
     function ($root, $timeout, $compile) {
 
       if (partial) {
-      $(document).ready(function () {
-        var partial$;
-        partial$ = $(partial);
-        partial$.appendTo(document.body);
-        $compile(partial$)($root);
-      });
+        $(document).ready(function () {
+          var partial$;
+          partial$ = $(partial);
+          partial$.appendTo(document.body);
+          $compile(partial$)($root);
+        });
       }
 
       return {
@@ -111,7 +111,7 @@ define([
             options.asyncId = String(Math.random());
             confirmCallbacks[options.asyncId] = callback;
             $root.$broadcast('bmp.foundation.confirm', options);
-            $scope.openRevealModal('confirm');
+            $scope.openRevealModal('bmpFoundationConfirm');
           };
 
           /*jslint unparam:true*/ // $event
@@ -153,7 +153,7 @@ define([
 
       /*jslint unparam:true*/ // $event
       $scope.$on('bmp.foundation.revealClosed', function ($event, id) {
-        if (id === 'confirm') {
+        if (id === 'bmpFoundationConfirm') {
           $root.$broadcast('bmp.foundation.confirmed', $scope.asyncId, $scope.result);
         }
       });

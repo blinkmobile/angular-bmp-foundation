@@ -77,6 +77,7 @@ module.exports = function (grunt) {
       all: {
         options: {
           urls: [
+            'http://127.0.0.1:9001/tests/revealConfirm/index.html'
           ],
           run: true
         }

@@ -1,6 +1,7 @@
 /*jslint browser:true, indent:2*/
 /*globals define, require*/ // Require.JS
 /*jslint nomen:true*/ // LoDash / Underscore.JS
+/*jqlint angular:true*/
 
 // https://github.com/umdjs/umd/blob/master/amdWeb.js
 (function (root, factory) {

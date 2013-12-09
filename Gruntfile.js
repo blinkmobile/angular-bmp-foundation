@@ -9,10 +9,26 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-jqlint');
   grunt.loadNpmTasks('grunt-jslint');
   grunt.loadNpmTasks('grunt-mocha');
 
   grunt.initConfig({
+
+    jqlint: {
+      all: {
+        src: [
+          '**/*.js',
+          '!**/*.min.js',
+          '!node_modules/**/*',
+          '!bower_components/**/*'
+        ],
+        options: {
+          errorsOnly: false,
+          failOnError: true
+        }
+      }
+    },
 
     jslint: {
       all: {
@@ -87,7 +103,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', ['requirejs']);
-  grunt.registerTask('test', ['connect:temporary', 'jslint', 'mocha']);
+  grunt.registerTask('test', ['connect:temporary', 'jslint', 'jqlint', 'mocha']);
   // Default task(s).
   grunt.registerTask('default', ['test', 'build']);
 

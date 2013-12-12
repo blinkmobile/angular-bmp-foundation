@@ -24,7 +24,7 @@ module.exports = function (grunt) {
           '!bower_components/**/*'
         ],
         options: {
-          errorsOnly: false,
+          errorsOnly: true,
           failOnError: true
         }
       }

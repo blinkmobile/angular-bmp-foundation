@@ -6,7 +6,7 @@
   "main": "bmpFoundation.min.js",
   "devDependencies": {
     "grunt": "~0.4",
-    "grunt-contrib-connect": "~0.5",
+    "grunt-contrib-connect": "~0.6",
     "grunt-contrib-requirejs": "~0.4",
     "grunt-jqlint": "~0.1",
     "grunt-jslint": "~1.1",

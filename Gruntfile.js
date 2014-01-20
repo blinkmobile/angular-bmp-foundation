@@ -53,7 +53,6 @@ module.exports = function (grunt) {
           name: 'bmpFoundation',
           include: ['bmpFoundation'],
           inlineText: true,
-          stubModules: ['text'],
           paths: {
             jquery: 'empty:',
             foundation: 'empty:',
@@ -61,7 +60,7 @@ module.exports = function (grunt) {
             angular: 'empty:',
             text: 'bower_components/requirejs-text/text'
           },
-          excludes: [
+          exclude: [
             'jquery',
             'foundation',
             'lodash',

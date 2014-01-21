@@ -21,7 +21,24 @@
 }(this, function ($, _, ng, partial) {
   'use strict';
 
-  var mod;
+  var mod, isEntirelyVisible;
+
+  isEntirelyVisible = function (el$) {
+    var offset, elHeight, elWidth;
+    offset = el$.offset();
+    if (offset.top < 0 || offset.left < 0) {
+      return false;
+    }
+    elHeight = el$.outerHeight();
+    if (offset.top + elHeight > $(window).innerHeight()) {
+      return false;
+    }
+    elWidth = el$.outerWidth();
+    if (offset.left + elWidth > $(window).innerWidth()) {
+      return false;
+    }
+    return true;
+  };
 
   mod = ng.module('bmp.foundation', []);
 
@@ -59,6 +76,17 @@
         var this$;
         this$ = $(this);
         $root.$broadcast('bmp.foundation.revealClosed', this$.attr('id'), this$);
+      });
+      $(document).on('opened', '.reveal-modal[data-reveal]', function () {
+        var this$;
+        this$ = $(this);
+        $root.$broadcast('bmp.foundation.revealOpened', this$.attr('id'), this$);
+        if (!isEntirelyVisible(this$)) {
+          this$.css('top', '0px');
+          setTimeout(function () {
+            this$.css('top', '100px');
+          }, 50);
+        }
       });
       return {
         replace: false,

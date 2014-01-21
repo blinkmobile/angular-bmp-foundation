@@ -1,6 +1,6 @@
 {
   "name": "angular-bmp-foundation",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Angular.JS-Foundation bindings by Blink Mobile",
   "repository": "git@github.com:blinkmobile/angular-bmp-foundation.git",
   "main": "bmpFoundation.min.js",

@@ -21,14 +21,25 @@
 </head>
 <body x-bmp-foundation="">
 
-<main x-ng-controller="MainCtrl">
-  <button id="alertBtn" x-ng-click="alert()">alert</button>
-  <output>{{output}}</output>
-</main>
+<button id="alertBtn" data-reveal-id="testModal">alert</button>
 
 <div x-ng-include="'/bmpFoundation.html'"></div>
 
 <div id="mocha"></div>
+
+<div id="testModal" class="reveal-modal" data-reveal="">
+  <h2>Test</h2>
+  <p class="lead">This is a test</p>
+  <p>This is a quick test</p>
+  <div class="row">
+    <div class="small-12 columns">
+      <button class="right" x-bmp-close-reveal="">Close</button>
+    </div>
+  </div>
+
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
 <script src="/bower_components/foundation/js/foundation.js"></script>
 <script src="/bmpFoundation.js"></script>
 <script src="fixture.js"></script>

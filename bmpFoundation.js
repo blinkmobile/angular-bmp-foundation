@@ -90,11 +90,11 @@
       return {
         replace: false,
         link: function ($scope) {
-          var confirmCallbacks, pokeFoundation;
+          var confirmCallbacks, pokeFoundation, observer, startWatching, stopWatching;
 
           confirmCallbacks = {};
 
-          pokeFoundation = function () {
+          pokeFoundation = _.throttle(function () {
             $timeout(function () {
               $root.$evalAsync(function () {
                 // https://github.com/zurb/foundation/issues/2956
@@ -106,7 +106,7 @@
                 $(document.body).foundation();
               });
             }, 0);
-          };
+          }, 1e3, { leading: true, trailing: true });
 
           $scope.openRevealModal = function (id) {
             var modal$;
@@ -150,7 +150,57 @@
           });
           /*jslint unparam:false*/
 
-          $scope.$watch(_.throttle(pokeFoundation, 1e3, { leading: false }));
+          // determine how to poke Foundation when necessary
+          if (window.MutationObserver) {
+            observer = new window.MutationObserver(function () { // param: mutations
+              // called whenever document.body changes
+              pokeFoundation();
+            });
+            startWatching = function () {
+              observer.observe(document.body, {
+                childList: true,
+                attributes: true,
+                subtree: true,
+                attributeFilter: [
+                  'data-interchange',
+                  'data-topbar',
+                  'data-orbit',
+                  'data-clearing',
+                  'data-abide',
+                  'data-alert',
+                  'data-tooltip',
+                  'data-joyride',
+                  'data-accordion',
+                  'data-tab',
+                  'data-dropdown',
+                  'data-dropdown-content',
+                  'data-magellan-expedition',
+                  'data-magellan-destination',
+                  'data-magellan-arrival',
+                  'data-reveal-id'
+                ]
+              });
+              pokeFoundation();
+            };
+            stopWatching = function () {
+              observer.disconnect();
+            };
+
+          } else {
+            startWatching = function () {
+              stopWatching = $scope.$watch(pokeFoundation);
+              pokeFoundation();
+            };
+          }
+
+          // poke Foundation when necessary
+          startWatching();
+          $(document).on('open close', '[data-reveal]', function () {
+            stopWatching();
+          });
+          $(document).on('opened closed', '[data-reveal]', function () {
+            startWatching();
+          });
         }
       };
     }

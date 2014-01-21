@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html x-ng-app="app">
+<head>
+  <title></title>
+  <link rel="stylesheet" href="/bower_components/mocha/mocha.css" />
+  <link rel="stylesheet" href="/bower_components/foundation/css/normalize.css" />
+  <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css" />
+  <script src="/bower_components/mocha/mocha.js"></script>
+  <script src="/bower_components/chai/chai.js"></script>
+  <!-- indirect dependencies -->
+  <script src="/bower_components/jquery/jquery.js"></script>
+  <script src="/bower_components/modernizr/modernizr.js"></script>
+  <!-- component dependencies -->
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/lodash/dist/lodash.js"></script>
+  <script>
+    mocha.setup({
+      ui: 'tdd'
+    });
+  </script>
+</head>
+<body x-bmp-foundation="">
+
+<main x-ng-controller="MainCtrl">
+  <button id="alertBtn" x-ng-click="alert()">alert</button>
+  <output>{{output}}</output>
+</main>
+
+<div x-ng-include="'/bmpFoundation.html'"></div>
+
+<div id="mocha"></div>
+<script src="/bower_components/foundation/js/foundation.js"></script>
+<script src="/bmpFoundation.js"></script>
+<script src="fixture.js"></script>
+<script src="tests.js"></script>
+<script>
+  if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+    mocha.run();
+  }
+</script>
+</body>
+</html>

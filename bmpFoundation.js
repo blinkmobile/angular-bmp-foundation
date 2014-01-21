@@ -100,7 +100,6 @@
                 // https://github.com/zurb/foundation/issues/2956
                 $(window).off('scroll'); // temporary fix to clear Magellan
                 // temporary fix to clear Reveal
-                $('[data-reveal-id]').off('click');
                 $('body').off('keyup.fndtn.reveal');
 
                 // reinitialise Foundation

@@ -92,6 +92,7 @@ module.exports = function (grunt) {
       all: {
         options: {
           urls: [
+            'http://127.0.0.1:9001/tests/eventBindings/index.html',
             'http://127.0.0.1:9001/tests/revealAlert/index.html',
             'http://127.0.0.1:9001/tests/revealConfirm/index.html'
           ],

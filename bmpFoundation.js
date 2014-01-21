@@ -12,7 +12,7 @@
       'jquery',
       'lodash',
       'angular',
-      'text!partial.html',
+      'text!bmpFoundation.html',
       'foundation'
     ], factory);
   } else {
